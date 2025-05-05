@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Football Game</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #66bb6a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #field {
+      position: relative;
+      width: 80vw;
+      height: 80vh;
+      background: linear-gradient(to right, #66bb6a 50%, #81c784 50%);
+    }
+
+    .goal {
+      position: absolute;
+      width: 20px;
+      height: 150px;
+      top: calc(50% - 75px);
+      background: #ffffff;
+    }
+
+    #goal-left {
+      left: 0;
+    }
+
+    #goal-right {
+      right: 0;
+    }
+
+    #ball {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle, white 30%, black 31%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    .control-btn {
+      font-size: 30px;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .control-btn:hover {
+      background-color: #45a049;
+    }
+
+    .control-btn:focus {
+      outline: none;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="field">
+    <div id="goal-left" class="goal"></div>
+    <div id="goal-right" class="goal"></div>
+    <div id="ball"></div>
+  </div>
+
+  <div class="controls">
+    <button id="up" class="control-btn">↑</button>
+    <button id="left" class="control-btn">←</button>
+    <button id="down" class="control-btn">↓</button>
+    <button id="right" class="control-btn">→</button>
+  </div>
+
+  <script>
+    const ball = document.getElementById('ball');
+    let ballX = window.innerWidth / 2;
+    let ballY = window.innerHeight / 2;
+    const ballSpeed = 10;
+
+    function moveBall(dx, dy) {
+      ballX += dx;
+      ballY += dy;
+
+      // Keep ball inside field
+      ballX = Math.max(0, Math.min(window.innerWidth - 30, ballX));
+      ballY = Math.max(0, Math.min(window.innerHeight - 30, ballY));
+
+      ball.style.left = ballX + 'px';
+      ball.style.top = ballY + 'px';
+
+      checkGoal();
+    }
+
+    function checkGoal() {
+      if (
+        ballX <= 20 &&
+        ballY >= window.innerHeight / 2 - 75 &&
+        ballY <= window.innerHeight / 2 + 75
+      ) {
+        alert('GOAL on the LEFT!');
+        resetBall();
+      } else if (
+        ballX >= window.innerWidth - 50 &&
+        ballY >= window.innerHeight / 2 - 75 &&
+        ballY <= window.innerHeight / 2 + 75
+      ) {
+        alert('GOAL on the RIGHT!');
+        resetBall();
+      }
+    }
+
+    function resetBall() {
+      ballX = window.innerWidth / 2;
+      ballY = window.innerHeight / 2;
+      ball.style.left = ballX + 'px';
+      ball.style.top = ballY + 'px';
+    }
+
+    // Arrow key controls
+    window.addEventListener('keydown', (e) => {
+      switch (e.key) {
+        case 'ArrowUp':
+          moveBall(0, -ballSpeed);
+          break;
+        case 'ArrowDown':
+          moveBall(0, ballSpeed);
+          break;
+        case 'ArrowLeft':
+          moveBall(-ballSpeed, 0);
+          break;
+        case 'ArrowRight':
+          moveBall(ballSpeed, 0);
+          break;
+      }
+    });
+
+    // Button controls
+    document.getElementById('up').addEventListener('click', () => moveBall(0, -ballSpeed));
+    document.getElementById('down').addEventListener('click', () => moveBall(0, ballSpeed));
+    document.getElementById('left').addEventListener('click', () => moveBall(-ballSpeed, 0));
+    document.getElementById('right').addEventListener('click', () => moveBall(ballSpeed, 0));
+
+    window.addEventListener('resize', resetBall);
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Football Game</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #66bb6a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #field {
+      position: relative;
+      width: 80vw;
+      height: 80vh;
+      background: linear-gradient(to right, #66bb6a 50%, #81c784 50%);
+    }
+
+    .goal {
+      position: absolute;
+      width: 20px;
+      height: 150px;
+      top: calc(50% - 75px);
+      background: #ffffff;
+    }
+
+    #goal-left {
+      left: 0;
+    }
+
+    #goal-right {
+      right: 0;
+    }
+
+    #ball {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle, white 30%, black 31%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    .control-btn {
+      font-size: 30px;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .control-btn:hover {
+      background-color: #45a049;
+    }
+
+    .control-btn:focus {
+      outline: none;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="field">
+    <div id="goal-left" class="goal"></div>
+    <div id="goal-right" class="goal"></div>
+    <div id="ball"></div>
+  </div>
+
+  <div class="controls">
+    <button id="up" class="control-btn">↑</button>
+    <button id="left" class="control-btn">←</button>
+    <button id="down" class="control-btn">↓</button>
+    <button id="right" class="control-btn">→</button>
+  </div>
+
+  <script>
+    const ball = document.getElementById('ball');
+    let ballX = window.innerWidth / 2;
+    let ballY = window.innerHeight / 2;
+    const ballSpeed = 10;
+
+    function moveBall(dx, dy) {
+      ballX += dx;
+      ballY += dy;
+
+      // Keep ball inside field
+      ballX = Math.max(0, Math.min(window.innerWidth - 30, ballX));
+      ballY = Math.max(0, Math.min(window.innerHeight - 30, ballY));
+
+      ball.style.left = ballX + 'px';
+      ball.style.top = ballY + 'px';
+
+      checkGoal();
+    }
+
+    function checkGoal() {
+      if (
+        ballX <= 20 &&
+        ballY >= window.innerHeight / 2 - 75 &&
+        ballY <= window.innerHeight / 2 + 75
+      ) {
+        alert('GOAL on the LEFT!');
+        resetBall();
+      } else if (
+        ballX >= window.innerWidth - 50 &&
+        ballY >= window.innerHeight / 2 - 75 &&
+        ballY <= window.innerHeight / 2 + 75
+      ) {
+        alert('GOAL on the RIGHT!');
+        resetBall();
+      }
+    }
+
+    function resetBall() {
+      ballX = window.innerWidth / 2;
+      ballY = window.innerHeight / 2;
+      ball.style.left = ballX + 'px';
+      ball.style.top = ballY + 'px';
+    }
+
+    // Arrow key controls
+    window.addEventListener('keydown', (e) => {
+      switch (e.key) {
+        case 'ArrowUp':
+          moveBall(0, -ballSpeed);
+          break;
+        case 'ArrowDown':
+          moveBall(0, ballSpeed);
+          break;
+        case 'ArrowLeft':
+          moveBall(-ballSpeed, 0);
+          break;
+        case 'ArrowRight':
+          moveBall(ballSpeed, 0);
+          break;
+      }
+    });
+
+    // Button controls
+    document.getElementById('up').addEventListener('click', () => moveBall(0, -ballSpeed));
+    document.getElementById('down').addEventListener('click', () => moveBall(0, ballSpeed));
+    document.getElementById('left').addEventListener('click', () => moveBall(-ballSpeed, 0));
+    document.getElementById('right').addEventListener('click', () => moveBall(ballSpeed, 0));
+
+    window.addEventListener('resize', resetBall);
+  </script>
+</body>
+</html>
